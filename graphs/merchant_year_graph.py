@@ -9,16 +9,19 @@ import plotly.graph_objs as go
 from colors import colors
 from tables.prod_merchant_table import prod_merchant_tbl
 from functions import make_dbc_table
-from sql_queries import (query_results_1, query_results_2, query_results_3, 
-                         query_results_4, query_results_5, query_results_6, 
-                         query_results_7, query_results_8, query_results_9,
-                         query_results_10, query_results_11, query_results_12, 
-                         query_results_13, query_results_14, query_results_15,
-                         query_results_16, query_results_17, query_results_18,
-                         query_results_19, query_results_20, query_results_21,
-                         query_results_22, query_results_23, query_results_24)
+from x_axes import years, quarters, months 
+from sql_queries_vm import*
 
-years = ['2022',' 2023', '2024', '2025', '2026', '2027', '2028']
+annotations = [dict(
+            x=xi,
+            y=yi,
+            text=str(zi),
+            xanchor='auto',
+            yanchor='bottom',
+            showarrow=False,
+            align='center', 
+            font=dict(size=8),
+        ) for xi, yi, zi in zip(years['years'], query_results_19['prod_merchant_year'], query_results_22['coverage_ratio'])]
 
 BAR_H_WIDTH = 2 
 PLOTS_FONT_SIZE = 11
@@ -26,10 +29,10 @@ PLOTS_HEIGHT = 340  # For main graphs
 SMALL_PLOTS_HEIGHT = 290  # For secondary graphs
 
 year_count = []
-for year in query_results_19['année'].unique():
+for year in years['years'].unique():
     year_count.append({'label':str(year),'value':year})
 
-not_oa_cr_ppa_year= html.Div(
+merchant_year_bar= html.Div(
     children=[
         html.Div(
             className="central-panel1",
@@ -47,7 +50,7 @@ not_oa_cr_ppa_year= html.Div(
                                           figure = {'data':[
                                                go.Bar(
                                                   name='HCR', 
-                                                  x=years, 
+                                                  x=years['years'], 
                                                   y=query_results_22['coverage_ratio'],
                                                   opacity=0,
                                                   marker=dict(color=colors['white']),
@@ -57,7 +60,7 @@ not_oa_cr_ppa_year= html.Div(
                                                       ),
                                                go.Bar(
                                                   name='PPA', 
-                                                  x=years, 
+                                                  x=years['years'], 
                                                   y=query_results_16['ppa_year'],
                                                   opacity=1,
                                                   marker=dict(color=colors['ppa']),
@@ -65,7 +68,7 @@ not_oa_cr_ppa_year= html.Div(
                                                   ),
                                                go.Bar(
                                                  name='Prod Merchant', 
-                                                 x=years, 
+                                                 x=years['years'], 
                                                  y=query_results_19['prod_merchant_year'],
                                                  opacity=0.25,
                                                  marker=dict(color=colors['e_white']),                             
@@ -73,14 +76,7 @@ not_oa_cr_ppa_year= html.Div(
                                                  ), 
                                              ], 
                                               'layout':go.Layout(title='Prod Merchant Hedged with PPA/year',
-                                                                 annotations=[dict(x=years[0], y=(query_results_19.iloc[0, 1]), text=query_results_22.iloc[0, 1], showarrow=False, align='center', 
-                                                                                    font=dict(size=8)), 
-                                                                                dict(x=years[1], y=(query_results_19.iloc[1, 1]),text=query_results_22.iloc[1, 1], showarrow=False, align='center', font=dict(size=8)),
-                                                                                dict(x=years[2], y=(query_results_19.iloc[2, 1]),text=query_results_22.iloc[2, 1], showarrow=False, align='center', font=dict(size=8)),
-                                                                                dict(x=years[3], y=(query_results_19.iloc[3, 1]),text=query_results_22.iloc[3, 1], showarrow=False, align='center', font=dict(size=8)),
-                                                                                dict(x=years[4], y=(query_results_19.iloc[4, 1]),text=query_results_22.iloc[4, 1], showarrow=False, align='center', font=dict(size=8)),
-                                                                                dict(x=years[5], y=(query_results_19.iloc[5, 1]),text=query_results_22.iloc[5, 1], showarrow=False, align='center', font=dict(size=8)),
-                                                                                dict(x=years[6], y=(query_results_19.iloc[6, 1]),text=query_results_22.iloc[6, 1], showarrow=False, align='center', font=dict(size=8))],
+                                                                 annotations=annotations,
                                                                  xaxis=dict(gridcolor=colors['grid'], title='year', dtick=1, tickangle = 45), 
                                                                  yaxis=dict(gridcolor=colors['grid'], title='GWh', side='left'),
                                                                  barmode='overlay',

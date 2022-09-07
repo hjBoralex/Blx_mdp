@@ -39,5 +39,8 @@ colors = {
     "blue_blx":"#00a8ff",
     "green":"#16a085",  #green up
     "solar":"#fdcb6e",#
-    "wind_power":"#00b894"#
+    "wind_power":"#00b894",#
+    "mtm_y":"#2ecc71",
+    "mtm_q":"#f1c40f",
+    "mtm_m":"#f39c12"
 }

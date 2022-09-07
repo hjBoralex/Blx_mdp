@@ -9,11 +9,7 @@ import dash_html_components as html
 import plotly.graph_objs as go
 from colors import colors
 from x_axes import years, quarters, months  
-from sql_queries import (query_results_25, query_results_26, query_results_27,
-                         query_results_28, query_results_29, query_results_30,
-                         query_results_31, query_results_32, query_results_33,
-                         query_results_34, query_results_35, query_results_36,
-                         )
+from sql_queries_vm import*
 
 BAR_H_WIDTH = 2 
 PLOTS_FONT_SIZE = 11
@@ -52,7 +48,7 @@ exposure_solar_wind_power_gr = html.Div(
                           opacity=0.45
                           )
                       ], 
-                      'layout':go.Layout(dict(title='Solar Wind Power Exposure/Year', 
+                      'layout':go.Layout(dict(title='Solar Wind-Power Exposure/Year', 
                                               xaxis = dict(gridcolor=colors['grid'], title='year', dtick=1, tickangle = 45), 
                                               yaxis = dict(gridcolor=colors['grid'], title='GWh'),
                                               paper_bgcolor = colors["background1"],
@@ -66,7 +62,7 @@ exposure_solar_wind_power_gr = html.Div(
                   style={'width': '100%', 'display': 'inline-block', 'vertical-align': 'top'},
                   ),
         dcc.Dropdown(id='sol_wp_drop_year_q',options=year_count,value=years['years'].min(),
-                     style=dict(width='40%',verticalAlign="left", display='inline-block', )),
+                     style=dict(width='45%',verticalAlign="left", display='inline-block', )),
         #Exposition per quarter
         dcc.Graph(id='sol_wp_exp_q', 
                   figure = {'data':[
@@ -85,7 +81,7 @@ exposure_solar_wind_power_gr = html.Div(
                           opacity=0.45
                           )
                       ], 
-                      'layout':go.Layout(title='Solar Wind Power Exposure/Quarter/Year', 
+                      'layout':go.Layout(title='Solar Wind-Power Exposure/Quarter/Year', 
                                          xaxis = dict(gridcolor=colors['grid'], title='quarter'), 
                                          yaxis = dict(gridcolor=colors['grid'], title='GWh'),
                                          paper_bgcolor = colors["background1"],
@@ -100,7 +96,7 @@ exposure_solar_wind_power_gr = html.Div(
                   ),
         #Dropdown exposition per quarter
         dcc.Dropdown(id='sol_wp_drop_year_m',options=year_count,value=years['years'].min(), 
-                     style=dict(width='40%', verticalAlign="right", display='inline-block')),
+                     style=dict(width='45%', verticalAlign="right", display='inline-block')),
         #Exposition per month
         dcc.Graph(id='sol_wp_exp_m',
                   figure = {'data':[
@@ -119,7 +115,7 @@ exposure_solar_wind_power_gr = html.Div(
                           opacity=0.45
                           )
                       ], 
-                      'layout':go.Layout(title='Solar Wind Power Exposure/Month/Year', 
+                      'layout':go.Layout(title='Solar Wind-Power Exposure/Month/Year', 
                                          xaxis = dict(gridcolor=colors['grid'], title='months', tickangle = 45), 
                                          yaxis=dict(gridcolor=colors['grid'], title='GWh'),
                                          paper_bgcolor = colors["background1"],

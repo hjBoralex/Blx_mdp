@@ -6,19 +6,15 @@ Created on Fri Jul  8 11:54:42 2022
 """
 from dash import dcc, html
 import dash_bootstrap_components as dbc
+import pandas as pd
 import plotly.graph_objs as go
 from functions import make_dbc_table
+from sql_queries_vm import*
 
+cols = ['Years', 'Prod-Merchant', 'HCR', 'Prod-Total', 'HCR']
 
-from sql_queries import (query_results_1, query_results_2, query_results_3, 
-                         query_results_4, query_results_5, query_results_6, 
-                         query_results_7, query_results_8, query_results_9,
-                         query_results_10, query_results_11, query_results_12, 
-                         query_results_13, query_results_14, query_results_15,
-                         query_results_16, query_results_17, query_results_18,
-                         query_results_19, query_results_20, query_results_21,
-                         query_results_22, query_results_23, query_results_24)
-cols = ['Years', 'Merchant', 'HCR']
+frames=[query_results_19, query_results_22.iloc[:,1:], query_results_10.iloc[:,1],query_results_7.iloc[:,1]]
+df=pd.concat(frames, axis=1, ignore_index=False)
 
 table_header = [
      html.Thead(html.Tr([html.Th(i) for i in cols]))] 
@@ -26,8 +22,8 @@ table_header = [
 table_body = [
          html.Tbody(
              [
-                 html.Tr([html.Td(query_results_19.iloc[i][col]) for col in query_results_19.columns]) 
-                 for i in range(len(query_results_19))
+                 html.Tr([html.Td(df.iloc[i][col]) for col in df.columns]) 
+                 for i in range(len(df))
                  ]
              )
          ]

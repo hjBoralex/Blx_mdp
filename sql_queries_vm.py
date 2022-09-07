@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jun  8 16:45:57 2022
+Created on Wed Sep  7 09:21:47 2022
 
 @author: hermann.ngayap
 """
@@ -9,11 +9,10 @@ import pandas as pd
 import pyodbc
 import sqlalchemy
 from sqlalchemy import create_engine
-#from server_credentials import server_credentials
 
 #windows authentication 
 def mssql_engine():
-    engine = create_engine('mssql+pyodbc://BLX186-SQ1PRO01/StarDust?driver=SQL+Server+Native+Client+11.0') 
+    engine=create_engine("mssql+pyodbc://blx_mdp:04Apr&2022@10.140.251.3/StarDust?driver=ODBC+Driver+17+for+SQL+Server")
     return engine
 
 #================================================================
@@ -1848,9 +1847,9 @@ ORDER BY année  \
 	,mois;"
 query_results_48 = pd.read_sql(query_48, mssql_engine())
 
-#==================================
-#========== MtM     ===============
-#==================================
+#======================================
+#==========     MtM     ===============
+#======================================
 
 #===========MtM year===============
 query_49="SELECT h.année,\
@@ -1870,8 +1869,7 @@ GROUP BY h.année \
 ORDER BY h.année;"
 query_results_49 = pd.read_sql(query_49, mssql_engine())
 
-#===========MtM portfolio Merchant============
-
+#===========MtM Portfolio Merchant ============
 query_50="SELECT h.année \
 	,CAST(ROUND(SUM(- h.p50 * (cp.prix_contrat - mp.settlement_price)) / 1000000, 2) AS DECIMAL(20, 3)) AS MtM \
 FROM p50_p90_hedge AS h \
@@ -1891,8 +1889,7 @@ GROUP BY h.année \
 ORDER BY h.année;"
 query_results_50 = pd.read_sql(query_50, mssql_engine())
 
-#===========MtM portfolio Regulated=============
-
+#===========MtM Portfolio Regulated ============
 query_51="SELECT h.année \
 	,CAST(ROUND(SUM(- h.p50 * (cp.prix_contrat - mp.settlement_price)) / 1000000, 2) AS DECIMAL(20, 3)) AS MtM \
 FROM p50_p90_hedge AS h \

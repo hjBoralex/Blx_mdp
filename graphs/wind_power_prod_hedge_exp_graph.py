@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jul 13 11:19:32 2022
+Created on Sat Jul 16 17:00:20 2022
 
 @author: hermann.ngayap
 """
+
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 from colors import colors
 from x_axes import years, quarters, months  
-from sql_queries_vm import* 
+from sql_queries_vm import*
 
-BAR_H_WIDTH = 1 
+BAR_H_WIDTH = 2 
 PLOTS_FONT_SIZE = 11
 PLOTS_HEIGHT = 340  # For main graphs
 SMALL_PLOTS_HEIGHT = 290  # For secondary graphs
@@ -29,12 +30,12 @@ annotations = [dict(
             showarrow=False,
             align='center', 
             font=dict(size=8),
-        ) for xi, yi, zi in zip(years['years'], query_results_25['prod_solar'], query_results_43['sol_hcr_year'])]
+        ) for xi, yi, zi in zip(years['years'], query_results_26['prod_eol'], query_results_44['wp_hcr_year'])]
 
-prod_hedge_exp_solar_wind_power_gr = html.Div(
+prod_hedge_exp_wind_power_gr = html.Div(
     children=[
         html.H2(
-            children="Solar Production/Hedge/Exposure",
+            children="Wind Power Production/Hedge/Exposure",
             style={
                 "font-size": 14,
                 "margin-bottom": "0em",
@@ -42,54 +43,54 @@ prod_hedge_exp_solar_wind_power_gr = html.Div(
                 },
             ),
         #Hedge per year
-        dcc.Graph(id='sol_hedge_type_y',
+        dcc.Graph(id='wp_hedge_type_y',
                   figure = {'data':[
      
                       go.Bar(
                           name='HCR', 
                           x=years['years'], 
-                          y=query_results_43['sol_hcr_year'],
+                          y=query_results_44['wp_hcr_year'],
                           opacity=0.0,
                           marker=dict(color=colors['white']),
                           ),
+                     
                       go.Bar(
                           name='PPA', 
                           x=years['years'], 
-                          y=query_results_37.loc[query_results_37['type_contract'] == 'PPA', 'hedge_sol_year'],
+                          y=query_results_38.loc[query_results_38['type_contract'] == 'PPA', 'hedge_eol_year'],
                           opacity=1,
-                          base=query_results_37.loc[query_results_37['type_contract'] == 'OA', 'hedge_sol_year'],
                           marker=dict(color=colors['ppa']),
                           marker_line=dict(width= BAR_H_WIDTH, color=colors['bar_h_color']),
                           ),
-
+                      
                       go.Bar(
                           name='OA', 
                           x=years['years'], 
-                          y=query_results_37.loc[query_results_37['type_contract'] == 'OA', 'hedge_sol_year'],
+                          y=query_results_38.loc[query_results_38['type_contract'] == 'OA', 'hedge_eol_year'],
                           opacity=0.4,
-                          base=query_results_37.loc[query_results_37['type_contract'] == 'CR', 'hedge_sol_year'],
-                          offsetgroup=1,
+                          base=query_results_38.loc[query_results_38['type_contract'] == 'PPA', 'hedge_eol_year'],
                           marker=dict(color=colors['oa']),
                           marker_line=dict(width= BAR_H_WIDTH, color=colors['bar_h_color'])
                           ),
+
                       go.Bar(
                           name='CR', 
                           x=years['years'], 
-                          y=query_results_37.loc[query_results_37['type_contract'] == 'CR', 'hedge_sol_year'],
+                          y=query_results_38.loc[query_results_38['type_contract'] == 'CR', 'hedge_eol_year'],
                           opacity=0.25,
-                          offsetgroup=1,
+                          base=query_results_38.loc[query_results_38['type_contract'] == 'OA', 'hedge_eol_year'],
                           marker=dict(color=colors['cr']),
                           marker_line=dict(width= BAR_H_WIDTH, color=colors['bar_h_color'])
                           ),
 
-                     go.Bar(
-                         name='Prod Solar', 
-                         x=years['years'], 
-                         y=query_results_25['prod_solar'],
-                         opacity=0.09,
-                         marker=dict(color=colors['solar']),                             
-                         marker_line=dict(width= BAR_H_WIDTH, color=colors['bar_h_color']) 
-                         ),
+                      go.Bar(
+                          name='Prod Wind Power', 
+                          x=years['years'], 
+                          y=query_results_26['prod_eol'],
+                          opacity=0.09,
+                          marker=dict(color=colors['wind_power']),                             
+                          marker_line=dict(width= BAR_H_WIDTH, color=colors['bar_h_color']) 
+                          ), 
                      ], 
                       'layout':go.Layout(title='',
                                          annotations=annotations,

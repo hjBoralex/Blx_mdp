@@ -9,14 +9,7 @@ import dash_html_components as html
 import plotly.graph_objs as go
 from x_axes import years, quarters, months 
 from colors import colors
-from sql_queries import (query_results_1, query_results_2, query_results_3, 
-                         query_results_4, query_results_5, query_results_6, 
-                         query_results_7, query_results_8, query_results_9,
-                         query_results_10, query_results_11, query_results_12, 
-                         query_results_13, query_results_14, query_results_15,
-                         query_results_16, query_results_17, query_results_18,
-                         query_results_19, query_results_20, query_results_21,
-                         query_results_22, query_results_23, query_results_24)
+from sql_queries_vm import*
 
 BAR_H_WIDTH = 2 
 PLOTS_FONT_SIZE = 11
@@ -62,7 +55,7 @@ exposure_graph=html.Div(
                   style={'width': '100%', 'display': 'inline-block', 'vertical-align': 'top'},
                   ),
         dcc.Dropdown(id='drop_year_q',options=year_count,value=years['years'].min(),
-                     style=dict(width='40%',verticalAlign="left", display='inline-block', )),
+                     style=dict(width='40%',verticalAlign="left", display='inline-block')),
         #Exposition per quarter
         dcc.Graph(id='exposition_q', 
                   figure = {'data':[
@@ -80,8 +73,9 @@ exposure_graph=html.Div(
                                          plot_bgcolor= colors["background1"],
                                          font=dict(color=colors["text"], size=PLOTS_FONT_SIZE),
                                          hovermode="x unified",
-                                         showlegend=False,
-                                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                                         showlegend=True,
+                                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+                                                     ),
                                          )
                       },
                   style={'width': '100%', 'display': 'inline-block', 'vertical-align': 'top'} 
@@ -106,8 +100,9 @@ exposure_graph=html.Div(
                                          plot_bgcolor= colors["background1"],
                                          font=dict(color=colors["text"], size=PLOTS_FONT_SIZE),
                                          hovermode="x unified",
-                                         showlegend=False,
-                                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                                         showlegend=True,
+                                         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+                                                     ),
                                          ),
                       }, 
                   style={'width': '100%', 'display': 'inline-block', 'vertical-align': 'top'}

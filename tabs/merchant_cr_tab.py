@@ -8,9 +8,9 @@ from dash import dcc, html
 import plotly.graph_objs as go
 from colors import colors
 
-from graphs.not_oa_cr_ppa_year_graph import not_oa_cr_ppa_year
-from graphs.not_oa_cr_ppa_qtr_graph import not_oa_cr_ppa_qtr
-from graphs.not_oa_cr_ppa_mth_graph import not_oa_cr_ppa_mth
+from graphs.merchant_year_graph import merchant_year_bar
+from graphs.merchant_qtr_graph import merchant_qtr_bar
+from graphs.merchant_mth_graph import merchant_mth_bar
 
 
 merchant_cr_layout=html.Div(
@@ -32,9 +32,9 @@ merchant_cr_layout=html.Div(
                                "width": "70%",
                            },
                            children=[
-                               not_oa_cr_ppa_year,
-                               not_oa_cr_ppa_qtr,
-                               not_oa_cr_ppa_mth
+                               merchant_year_bar,
+                               merchant_qtr_bar,
+                               merchant_mth_bar
                                ]
                            )
                        ]
